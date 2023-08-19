@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react"
 import Box from './Box.jsx'
 import Popup from "./Popup.jsx";
+import CrossedBox from "./CrossedBox.jsx";
 let locationRelative;
 export default function Photo({ setKey }) {
     const [isTagging, setIsTagging] = useState(false);
     const [characters, setCharacters] = useState([]);
     const [finished, setFinished] = useState(false);
+    const [existedCharacters, setExistedCharacters] = useState([])
     const location = useRef({ x: null, y: null })
     function tagging(e) {
         setIsTagging(isTagging ? false : true);
@@ -24,7 +26,10 @@ export default function Photo({ setKey }) {
     }, [])
     return (<>
         {finished && <Popup setKey={setKey} />}
-        {!finished && isTagging && <Box location={location.current} setIsTagging={setIsTagging} characters={characters} setCharacters={setCharacters} locationRelative={locationRelative} setFinished={setFinished} />}
+        {!finished && isTagging && <Box location={location.current} setIsTagging={setIsTagging} characters={characters} setCharacters={setCharacters} locationRelative={locationRelative} setFinished={setFinished} setExistedCharacters={setExistedCharacters} existedCharacters={existedCharacters} />}
+        {existedCharacters.map((existedChar) => {
+            return <CrossedBox key={existedChar.y} location={existedChar} />
+        })}
         <img src="../../8054.jpg" alt="Where is everyone" onClick={tagging} style={{ width: 100 + "%" }} />
     </>)
 }

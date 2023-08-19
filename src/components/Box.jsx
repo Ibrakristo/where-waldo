@@ -1,4 +1,4 @@
-export default function Box({ location, setIsTagging, characters, setCharacters, locationRelative, setFinished }) {
+export default function Box({ location, setIsTagging, characters, setCharacters, locationRelative, setFinished, setExistedCharacters, existedCharacters }) {
 
 
     return (<>
@@ -21,6 +21,7 @@ export default function Box({ location, setIsTagging, characters, setCharacters,
                         if (res.success === true) {
                             setFinished(true);
                         }
+                        setExistedCharacters([...existedCharacters, locationRelative])
                     }
                     setIsTagging(false);
                 }}>{character}</li>;
